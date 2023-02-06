@@ -61,3 +61,35 @@ To test the renewal process, you can do a dry run with certbot:
 ```
 sudo certbot renew --dry-run
 ```
+
+
+
+### Configure NginX for Let's Encrypt SSL
+
+
+```
+server {
+
+    server_name itsyndicate.org;
+
+    listen 443 ssl;
+    ssl on;
+
+    ssl_certificate     /etc/letsencrypt/live/ssl.itsyndicate.org/fullchain.pem;
+
+    ssl_certificate_key /etc/letsencrypt/live/ssl.itsyndicate.org/privkey.pem;
+
+    root /var/www/html/;
+
+    index index.php index.html index.htm;
+
+    location ~ /.well-known {
+
+        root /var/www/letsencrypt;
+
+        allow all;
+
+    }
+
+}
+```
